@@ -1,11 +1,13 @@
 from dataclasses import dataclass, field
 from typing import Dict, Optional
 
+
 @dataclass
 class Student:
     roll_no: str
     name: str
     marks: Optional[float] = None
+
 
 @dataclass
 class MarksSystem:
@@ -24,4 +26,22 @@ class MarksSystem:
         if marks < 0 or marks > 100:
             raise ValueError("marks must be 0..100")
         self.students[roll_no].marks = marks
+
+    def calculate_grade(self, roll_no: str) -> str:
+        marks = self.students[roll_no].marks
+
+        if marks is None:
+            raise ValueError("marks not set")
+        if marks >= 90:
+            return "A+"
+        if marks >= 80:
+            return "A"
+        if marks >= 70:
+            return "B"
+        if marks >= 60:
+            return "C"
+        if marks >= 50:
+            return "D"
+
+        return "F"
 
