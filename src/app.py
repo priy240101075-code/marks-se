@@ -45,3 +45,23 @@ class MarksSystem:
 
         return "F"
 
+    def generate_report(self) -> str:
+        lines = ["ROLL\tNAME\tMARKS\tGRADE"]
+
+        for roll_no, student in self.students.items():
+            if student.marks is None:
+                marks_str = "-"
+                grade = "-"
+            else:
+                # Print marks as int if it is int-like (e.g., 91.0 -> 91)
+                marks_str = (
+                    str(int(student.marks))
+                    if float(student.marks).is_integer()
+                    else str(student.marks)
+                )
+                grade = self.calculate_grade(roll_no)
+
+            lines.append(f"{roll_no}\t{student.name}\t{marks_str}\t{grade}")
+
+        return "\n".join(lines)
+
